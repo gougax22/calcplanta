@@ -1,7 +1,6 @@
+import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
-import tkinter as tk
-from tkinter import messagebox
 
 class Planta:
     def __init__(self, nome, potencial_agua_solo, potencial_osmotico_raiz, pressao_xilema, altura_arvore):
@@ -35,51 +34,14 @@ class Planta:
         plt.ylabel('Pressão (MPa)')
         plt.legend()
         plt.grid(True)
-        plt.show()
+        st.pyplot(plt)
 
-def criar_planta_e_mostrar():
-    try:
-        # Pegando valores do formulário
-        nome = entrada_nome.get()
-        potencial_agua_solo = float(entrada_solo.get())
-        potencial_osmotico_raiz = float(entrada_raiz.get())
-        pressao_xilema = float(entrada_xilema.get())
-        altura_arvore = float(entrada_altura.get())
+# Interface web com Streamlit
+st.title("Simulação de Balanço Hídrico da Planta")
 
-        # Criar objeto da planta
-        planta = Planta(nome, potencial_agua_solo, potencial_osmotico_raiz, pressao_xilema, altura_arvore)
-        planta.plotar_balanco_hidrico()
+nome = st.text_input("Nome da Planta:")
+potencial_agua_solo = st.number_input("Potencial Hídrico do Solo (MPa):", value=0.0)
+potencial_osmotico_raiz = st.number_input("Potencial Osmótico da Raiz (MPa):", value=0.0)
+pressao_xilema = st.number_input("Pressão no Xilema (MPa):", value=0.0)
+altura_arvore = st.number_input("Altura da Árvore (metros):", value=0
 
-    except ValueError:
-        messagebox.showerror("Erro", "Por favor, insira valores numéricos válidos.")
-
-# Criando a janela principal
-janela = tk.Tk()
-janela.title("Simulação de Balanço Hídrico da Planta")
-
-# Interface do usuário
-tk.Label(janela, text="Nome da Planta:").grid(row=0)
-tk.Label(janela, text="Potencial Hídrico do Solo (MPa):").grid(row=1)
-tk.Label(janela, text="Potencial Osmótico da Raiz (MPa):").grid(row=2)
-tk.Label(janela, text="Pressão no Xilema (MPa):").grid(row=3)
-tk.Label(janela, text="Altura da Árvore (metros):").grid(row=4)
-
-# Campos de entrada
-entrada_nome = tk.Entry(janela)
-entrada_solo = tk.Entry(janela)
-entrada_raiz = tk.Entry(janela)
-entrada_xilema = tk.Entry(janela)
-entrada_altura = tk.Entry(janela)
-
-# Posicionamento dos campos de entrada
-entrada_nome.grid(row=0, column=1)
-entrada_solo.grid(row=1, column=1)
-entrada_raiz.grid(row=2, column=1)
-entrada_xilema.grid(row=3, column=1)
-entrada_altura.grid(row=4, column=1)
-
-# Botão para gerar gráfico
-tk.Button(janela, text='Mostrar Balanço Hídrico', command=criar_planta_e_mostrar).grid(row=5, column=1)
-
-# Iniciar a interface gráfica
-janela.mainloop()
