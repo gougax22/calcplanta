@@ -43,5 +43,11 @@ nome = st.text_input("Nome da Planta:")
 potencial_agua_solo = st.number_input("Potencial Hídrico do Solo (MPa):", value=0.0)
 potencial_osmotico_raiz = st.number_input("Potencial Osmótico da Raiz (MPa):", value=0.0)
 pressao_xilema = st.number_input("Pressão no Xilema (MPa):", value=0.0)
-altura_arvore = st.number_input("Altura da Árvore (metros):", value=0
+altura_arvore = st.number_input("Altura da Árvore (metros):", value=0.0)  # Fechado o parêntese corretamente aqui
 
+if st.button("Mostrar Balanço Hídrico"):
+    if nome and potencial_agua_solo and potencial_osmotico_raiz and pressao_xilema and altura_arvore:
+        planta = Planta(nome, potencial_agua_solo, potencial_osmotico_raiz, pressao_xilema, altura_arvore)
+        planta.plotar_balanco_hidrico()
+    else:
+        st.error("Por favor, insira todos os valores corretamente.")
